@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MenusyCanvas</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_dibujos">Dibujos</string>
+
+    <string-array name="formas">
+        <item>" "</item>
+        <item>Rectangulo</item>
+        <item>Circulo</item>
+    </string-array>
+
+    <string name="title_activity_trazos">Trazos</string>
+
+</resources>
