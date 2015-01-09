@@ -17,14 +17,13 @@ public class DbHelper extends SQLiteOpenHelper {//Alt+Intro --> implemertar meto
     }
 
     @Override
+    //Crea la tabla con la variable de la clase DataBaseManager
     public void onCreate(SQLiteDatabase db) {
-
         db.execSQL(DataBaseManager.CREATE_TABLE);
-
     }
 
     @Override
-    //actualiza la base de datos en funcion de la variable DB_SCHEME_VERSION
+    //Actualiza la base de datos en funcion de la variable DB_SCHEME_VERSION
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
