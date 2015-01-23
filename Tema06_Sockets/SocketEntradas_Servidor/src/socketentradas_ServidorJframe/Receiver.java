@@ -9,13 +9,6 @@ import java.net.Socket;
 
 import javax.swing.JTextArea;
 
-/**
- * This is the chat receiver. This works as a thread and continuously check
- * whether a message is available in the input buffer.
- * 
- * @author Lak J Comspace (http://lakjeewa.blogspot.com)
- * 
- */
 public class Receiver implements Runnable {
 
     private BufferedReader bufferedReader;
@@ -25,9 +18,14 @@ public class Receiver implements Runnable {
     private int vip1=3,vip2=3;
     private int gal=8;
     private int cen=54;
-        
-    public Receiver(Socket clientSocket,JTextArea chatView) {
+    public ServerSocket serverSocket;
+    public Socket clientSocket;
+  
+    public Receiver(ServerSocket serverSocket,Socket clientSocket,JTextArea chatView) {
         this.chatView = chatView;
+        this.serverSocket=serverSocket;
+        this.clientSocket=clientSocket;
+     
      
         try {
             //Recibir
@@ -46,25 +44,38 @@ public class Receiver implements Runnable {
     
     @Override
     public void run() {
-
+        //Lanzo el menu en la primera conexion por defecto
         String mensaje;
         String respuesta;
+        
+        respuesta="****BIENVENIDOS A LA RESERVA DE ENTRADAS****\n"
+                    + "0. Menu izq\n"          
+                    + "1. Reservar entradas lat. izq\n"
+                    + "2. Reservar entradas lat. derch\n"
+                    + "3. Reservar entradas Galeria\n"
+                    + "4. Reservar entradas Centrales\n"
+                    + "5. Reservar entradas Palco vip1\n"
+                    + "6. Reservar entradas Palco vip2\n"
+                    + "7. Ver precios y entradas\n"
+                    + "8. Salir";
+        chatView.append("Server: " + respuesta + "\n"); 
+        out.println(respuesta);
         
         while (true) {
             try {
                 if (bufferedReader.ready()) {
                     mensaje = bufferedReader.readLine(); // Read the chat message.
                     chatView.append("Client: " + mensaje + "\n"); // Print the chat message on chat window.
-                    if(mensaje.equals("menu")){
-                            respuesta="****BIENVENIDOS A LA RESERVA DE ENTRADAS****\n"
-                                            + "1. Reservar entradas lat. izq\n"
-                                            + "2. Reservar entradas lat. derch\n"
-                                            + "3. Reservar entradas Galeria\n"
-                                            + "4. Reservar entradas Centrales\n"
-                                            + "5. Reservar entradas Palco vip1\n"
-                                            + "6. Reservar entradas Palco vip2\n"
-                                            + "7. Ver precios y entradas\n"
-                                            + "8. Salir\n";
+                    if(mensaje.equals("0")){
+                            respuesta=    "0. Menu izq\n"          
+                                        + "1. Reservar entradas lat. izq\n"
+                                        + "2. Reservar entradas lat. derch\n"
+                                        + "3. Reservar entradas Galeria\n"
+                                        + "4. Reservar entradas Centrales\n"
+                                        + "5. Reservar entradas Palco vip1\n"
+                                        + "6. Reservar entradas Palco vip2\n"
+                                        + "7. Ver precios y entradas\n"
+                                        + "8. Salir\n";
                             chatView.append("Server: " + respuesta + "\n"); 
                             out.println(respuesta); 
                     }
@@ -144,9 +155,12 @@ public class Receiver implements Runnable {
                         chatView.append("Server: " + respuesta + "\n");
                         out.println(respuesta); 
                     }else if(mensaje.equals("8")){
-                        respuesta="Cerrando la conexion";
+                        respuesta="Cerrando la conexion cliente";
                         chatView.append(respuesta);
                         out.println(respuesta); 
+                        
+                        clientSocket.close();
+                        clientSocket = serverSocket.accept();//Solo funciona para el primer cliente
                     }
                     else{
                         chatView.append("Error\n"); 

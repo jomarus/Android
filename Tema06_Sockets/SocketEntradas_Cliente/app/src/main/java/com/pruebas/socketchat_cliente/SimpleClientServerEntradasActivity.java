@@ -17,12 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-/**
- * This is the main activity class for Client-Server Chat App.
- *
- * @author Lak J Comspace (http://lakjeewa.blogspot.com)
- *
- */
+
 public class SimpleClientServerEntradasActivity extends Activity {
 
     private EditText textField;
@@ -68,10 +63,10 @@ public class SimpleClientServerEntradasActivity extends Activity {
                     System.out.println("Server has not bean started on port 4444.");
                 }
             } catch (UnknownHostException e) {
-                System.out.println("Faild to connect server " + CHAT_SERVER_IP);
+                System.out.println("Failed to connect server " + CHAT_SERVER_IP);
                 e.printStackTrace();
             } catch (IOException e) {
-                System.out.println("Faild to connect server " + CHAT_SERVER_IP);
+                System.out.println("Failed to connect server " + CHAT_SERVER_IP);
                 e.printStackTrace();
             }
             return null;
@@ -124,7 +119,7 @@ public class SimpleClientServerEntradasActivity extends Activity {
                 }
 
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(150);
                 } catch (InterruptedException ie) {
                 }
             }
@@ -132,13 +127,6 @@ public class SimpleClientServerEntradasActivity extends Activity {
 
         @Override
         protected void onProgressUpdate(Void... values) {
-            /*if(message.equals("Cerrando la conexion")){
-                try {
-                    client.close();
-                }catch (Exception e){
-
-                }
-            }*/
             textView.append("Server: " + message + "\n");
         }
 
