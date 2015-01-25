@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SpinnerListas</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="paises">
+        <item>España</item>
+        <item>Austria</item>
+        <item>Alemania</item>
+        <item>Italia</item>
+        <item>Francia</item>
+    </string>
+
+</resources>
