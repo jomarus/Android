@@ -40,50 +40,9 @@ public class DataBaseManager {
     //INSERTAR
     //bd.insert(TABLA, NullColumHack, ContentValues);
     public void insertar(String nombre, String telefono){
-        db.insert(TABLE_NAME,null,generarContentValues(nombre, telefono));
-    }
-    //Esta operacion se repite mucho, por eso creo el metodo generarContentValues
-    private ContentValues generarContentValues(String nombre, String telefono){
         ContentValues valores = new ContentValues();
         valores.put(CN_NAME, nombre);
         valores.put(CN_PHONE, telefono);
-        return valores;
+        db.insert(TABLE_NAME,null,valores);
     }
-    //INSERTAR 2
-    public void insertar2(String nombre, String telefono){
-        //INSERT INTO contactos VALUES (null,'paco',9999)
-        db.execSQL("insert into "+TABLE_NAME+" values (null,'"+nombre+"',"+telefono+")");
-    }
-
-    //DELETE
-    public void eliminar(String nombre){
-        //bd.delete(Tabla, Clausula Where, Argumentos Where)
-        db.delete(TABLE_NAME, CN_NAME + "=?",new String[]{nombre});//vector de strings para poder eliminar varios a la vez
-    }
-    public void eliminarMultiple(String nom1,String nom2){
-        //bd.delete(Tabla, Clausula Where, Argumentos Where)
-        db.delete(TABLE_NAME, CN_NAME + "IN (?,?)",new String[]{nom1, nom2});
-    }
-
-    //UPDATE
-    public void modificarTelefono(String nombre, String nuevoTelefono){
-        //bd.update(TABLA, ContentValues, Clausula Where, Argumentos Where)
-        db.update(TABLE_NAME,generarContentValues(nombre,nuevoTelefono),CN_NAME + "=?",new String[]{nombre});
-    }
-
-
-    //RECORRER BASE DE DATOS
-    public Cursor cargarCursorContactos(){
-        String[] columnas = new String[]{CN_ID,CN_NAME,CN_PHONE};
-        //query(String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy)
-        return db.query(TABLE_NAME,columnas,null,null,null,null,null);
-    }
-
-    //BUSCAR UN CONTACTO
-    public Cursor buscarContacto(String nombre){
-        String[] columnas = new String[]{CN_ID,CN_NAME,CN_PHONE};
-        return db.query(TABLE_NAME,columnas,CN_NAME + "=?",new String[]{nombre},null,null,null);//? se sustetuye por el String[]{nombre}
-    }
-
-
 }

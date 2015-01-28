@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.pruebas.customview" >
+    package="com.photocad.menusycanvas" >
 
     <application
         android:allowBackup="true"
@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".MyActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,8 +17,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PantallaCustomDibujos"
-            android:label="@string/title_activity_pantalla_custom_dibujos" >
+            android:name=".Dibujos"
+            android:label="@string/title_activity_dibujos" >
+        </activity>
+        <activity
+            android:name=".Trazos"
+            android:label="@string/title_activity_trazos" >
         </activity>
     </application>
 
