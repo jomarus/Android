@@ -1,8 +1,7 @@
 package com.example.mati.jmartinez_examen_2eva;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -45,6 +44,21 @@ public class MainActivity extends ActionBarActivity {
     String nombreZona;
     Bundle mBundle;
 
+
+    //VARIABLES SPINNER
+    String[] strings = {"Zona A","Zona B","Zona C"};
+    String[] precios = {"30","20","10"};
+    String[] subs = {"Oceania Asia","Africa America","Europa"};
+    TextView label;
+    TextView continente;
+    TextView preciosTV;
+    int arr_images[] = { R.drawable.asia_oceania, R.drawable.america_africa, R.drawable.europa};
+
+    Button button;
+    TextView textview;
+    Spinner spinner;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,14 +89,14 @@ public class MainActivity extends ActionBarActivity {
         enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calcularResultado();
+                calcularResultadoConSpinner();
                 intent = new Intent(getBaseContext(), Resultado.class);
                 intent.putExtras(mBundle);
                 startActivity(intent);
             }
         });
 
-        populateCarList();
+        populateList();
         populateListView();
         registerClickCallback();
     }
@@ -108,7 +122,31 @@ public class MainActivity extends ActionBarActivity {
         mBundle.putInt("tarifa", tarifa);
     }
 
-    private void populateCarList() {
+    private void calcularResultadoConSpinner(){
+
+        nombreZona= continente.getText()+"";
+        peso=Integer.parseInt(pesoText.getText() + "");
+        precio=Integer.parseInt(preciosTV.getText() + "");
+        precioFinal=precio+(precio*tarifa/100)*peso;
+
+        if(conTarjeta.isChecked()){
+            regalo=true;
+        }
+        if(conRegalo.isChecked()){
+            tarjeta=true;
+        }
+        mBundle=new Bundle();
+        mBundle.putString("nombreZona", nombreZona);
+        mBundle.putInt("peso", peso);
+        mBundle.putInt("precio", precioFinal);
+        mBundle.putBoolean("tarjeta", tarjeta);
+        mBundle.putBoolean("regalo", regalo);
+        mBundle.putInt("tarifa", tarifa);
+    }
+
+
+
+    private void populateList() {
         zonas.add(new Zona("ZonaA", 30, R.drawable.asia_oceania,"Oceania"));
         zonas.add(new Zona("ZonaB", 20, R.drawable.america_africa,"Africa"));
         zonas.add(new Zona("ZonaC", 10, R.drawable.europa,"Europa"));
@@ -120,8 +158,8 @@ public class MainActivity extends ActionBarActivity {
         ListView list = (ListView)findViewById(R.id.listViewCars);
         list.setAdapter(adapter);
 
-        //Spinner spi = (Spinner)findViewById(R.id.spinner);
-        //spi.setAdapter(adapter);
+        Spinner spinner = (Spinner)findViewById(R.id.spinner);
+        spinner.setAdapter(new AdapterSpinner(this, R.layout.row, strings));
 
     }
 
@@ -181,6 +219,42 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    private class AdapterSpinner extends ArrayAdapter<String>{
+
+        public AdapterSpinner(Context context, int textViewResourceId, String[] objects) {
+            super(context, textViewResourceId, objects);
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView,ViewGroup parent) {
+            return getCustomView(position, convertView, parent);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return getCustomView(position, convertView, parent);
+        }
+
+        public View getCustomView(int position, View convertView, ViewGroup parent) {
+
+            LayoutInflater inflater=getLayoutInflater();
+            View row=inflater.inflate(R.layout.row, parent, false);
+
+            label=(TextView)row.findViewById(R.id.company);
+            label.setText(strings[position]);
+
+            continente =(TextView)row.findViewById(R.id.sub);
+            continente.setText(subs[position]);
+
+            preciosTV=(TextView)row.findViewById(R.id.precio);
+            preciosTV.setText(precios[position]);
+
+            ImageView icon=(ImageView)row.findViewById(R.id.image);
+            icon.setImageResource(arr_images[position]);
+            return row;
+        }
+    }
+
     private DataBaseManager manager;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -201,6 +275,8 @@ public class MainActivity extends ActionBarActivity {
                 calcularResultado();
 
                 manager.insertar(nombreZona,precioFinal);
+                Toast.makeText(MainActivity.this, "Insertados los calculos del envio a la zona"+nombreZona+" con precio: "+precioFinal, Toast.LENGTH_SHORT).show();
+
                 intent = new Intent(getBaseContext(), Resultado.class);
                 intent.putExtras(mBundle);
                 startActivity(intent);

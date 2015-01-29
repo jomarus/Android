@@ -3,6 +3,6 @@
     tools:context=".MenuInicial" >
     <item android:id="@+id/MnuOpc1" android:title="Icono"
         android:icon="@drawable/tag"></item>
-    <item android:id="@+id/MnuOpc2" android:title="Enviar calculo a BD"
+    <item android:id="@+id/MnuOpc2" android:title="Enviar calculo a BD con lista"
         android:icon="@drawable/filter"></item>
 </menu>

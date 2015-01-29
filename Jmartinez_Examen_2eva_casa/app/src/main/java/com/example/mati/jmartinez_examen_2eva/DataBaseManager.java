@@ -45,3 +45,4 @@ public class DataBaseManager {
         db.insert(TABLE_NAME,null,valores);
     }
 }
+

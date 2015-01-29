@@ -71,7 +71,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hacer calculos"
+        android:text="Hacer calculos con spinner"
         android:id="@+id/button"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
@@ -87,21 +87,17 @@
 
     <ListView
         android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_height="190dp"
         android:id="@+id/listViewCars"
-        android:layout_below="@+id/radioGroup"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/checkBox"
-        android:layout_toStartOf="@+id/checkBox" />
+        android:layout_above="@+id/button"
+        android:layout_centerHorizontal="true" />
 
     <Spinner
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:id="@+id/spinner"
-        android:layout_below="@+id/editText"
-        android:layout_alignLeft="@+id/imageView"
-        android:layout_alignStart="@+id/imageView"
-        android:layout_marginTop="23dp" />
+        android:layout_above="@+id/checkBox"
+        android:layout_toLeftOf="@+id/checkBox2"
+        android:layout_toStartOf="@+id/checkBox2" />
 
 </RelativeLayout>
